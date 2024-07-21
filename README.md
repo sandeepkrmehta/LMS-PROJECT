@@ -55,7 +55,8 @@
 
 '''
 
-    ./src/**/*.{html,js,jsx,ts,tsx}"
+    ./src/**/*.{html,js,jsx,ts,tsx}" , "./index.html",
+
 '''
 
 4. Add the tailwind directives at the top of the "index.css" file
@@ -107,3 +108,4 @@
         "source.fixAll.eslint": true
     }
 '''
+
