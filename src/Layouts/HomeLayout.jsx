@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Link, useNavigate } from 'react-router-dom';
 
 import Footer from '../Components/Footer';
-// import { logout } from '../Redux/Slices/AuthSlice';
+
 function HomeLayout({ children }) {
 
     const dispatch = useDispatch();
@@ -68,11 +68,6 @@ function HomeLayout({ children }) {
                                 <Link to="/admin/dashboard"> Admin DashBoard</Link>
                             </li>
                         )}
-                        {/* {isLoggedIn && role === 'ADMIN' && (
-                            <li>
-                                <Link to="/course/create"> Create new course</Link>
-                            </li>
-                        )} */}
 
                         <li>
                             <Link to="/courses">All Courses</Link>
