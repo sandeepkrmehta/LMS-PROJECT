@@ -1,10 +1,10 @@
 import axios from "axios";
 
-const BASE_URL = "http://localhost:5014/api/v1";
+const BASE_URL = "http://localhost:5000/api/v1";
 
-const axioInstance = axios.create();
+const axiosInstance = axios.create();
 
-axioInstance.defaults.baseURL = BASE_URL;
-axioInstance.defaults.withCredentials = true;
+axiosInstance.defaults.baseURL = BASE_URL;
+axiosInstance.defaults.withCredentials = true;
 
-export default axioInstance;
+export default axiosInstance;
