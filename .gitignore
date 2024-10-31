@@ -1,0 +1,25 @@
+# Root-level .gitignore
+
+# Ignore environment files
+.env
+.env.local
+.env.production
+.env.test
+
+# Ignore node_modules in root
+node_modules/
+
+# Ignore logs
+logs/
+*.log
+
+# Ignore build files
+dist/
+build/
+
+# Ignore OS or editor files
+.DS_Store
+Thumbs.db
+*.swp
+.vscode/
+.idea/

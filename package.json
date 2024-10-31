@@ -1,0 +1,17 @@
+{
+  "name": "pwfullstack",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "lms-frontend": "npm run dev --prefix lms-frontend",
+    "lms-backend": "npm run dev --prefix lms-backend",
+    "dev": "concurrently \"npm run lms-frontend\" \"npm run lms-backend\""
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "dependencies": {
+    "concurrently": "^9.0.1"
+  }
+}
