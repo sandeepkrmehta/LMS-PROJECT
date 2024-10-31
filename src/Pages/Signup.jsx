@@ -52,8 +52,8 @@ function Signup() {
             return;
         }
 
-        if (signupData.fullName.length < 5) {
-            toast.error("Name should be at least 5 characters");
+        if (signupData.fullName.length < 4) {
+            toast.error("Name should be at least 4 characters");
             return;
         }
 
