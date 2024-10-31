@@ -20,23 +20,20 @@ const cookieOptions = {
  * @ACCESS Public
  */
 export const registerUser = asyncHandler(async (req, res, next) => {
-  // Destructuring the necessary data from req object
   const { fullName, email, password } = req.body;
 
-  // Check if the data is there or not, if not throw error message
+  // Check for required fields
   if (!fullName || !email || !password) {
     return next(new AppError('All fields are required', 400));
   }
 
-  // Check if the user exists with the provided email
+  // Check if the user already exists
   const userExists = await User.findOne({ email });
-
-  // If user exists send the reponse
   if (userExists) {
     return next(new AppError('Email already exists', 409));
   }
 
-  // Create new user with the given necessary data and save to DB
+  // Create the new user
   const user = await User.create({
     fullName,
     email,
@@ -48,53 +45,46 @@ export const registerUser = asyncHandler(async (req, res, next) => {
     },
   });
 
-  // If user not created send message response
   if (!user) {
-    return next(
-      new AppError('User registration failed, please try again later', 400)
-    );
+    return next(new AppError('User registration failed, please try again later', 400));
   }
 
-  // Run only if user sends a file
+  // Handle file upload if a file is provided
   if (req.file) {
     try {
       const result = await cloudinary.v2.uploader.upload(req.file.path, {
-        folder: 'LMS', // Save files in a folder named lms
+        folder: 'LMS',
         width: 250,
         height: 250,
-        gravity: 'faces', // This option tells cloudinary to center the image around detected faces (if any) after cropping or resizing the original image
+        gravity: 'faces',
         crop: 'fill',
       });
 
-      // If success
       if (result) {
-        // Set the public_id and secure_url in DB
         user.avatar.public_id = result.public_id;
         user.avatar.secure_url = result.secure_url;
-
-        // After successful upload remove the file from local storage
-        fs.rm(`uploads/${req.file.filename}`);
+        
+        // Remove file from local storage
+        fs.rmSync(`uploads/${req.file.filename}`);
       }
     } catch (error) {
-      return next(
-        new AppError(error || 'File not uploaded, please try again', 400)
-      );
+      return next(new AppError(error.message || 'File not uploaded, please try again', 400));
     }
   }
 
   // Save the user object
   await user.save();
 
-  // Generating a JWT token
+  // Generate JWT token
   const token = await user.generateJWTToken();
 
-  // Setting the password to undefined so it does not get sent in the response
+  // Remove password from the response
   user.password = undefined;
 
-  // Setting the token in the cookie with name token along with cookieOptions
+  // Set the token in a cookie
   res.cookie('token', token, cookieOptions);
 
-  // If all good send the response to the frontend
+  // Send the success response
   res.status(201).json({
     success: true,
     message: 'User registered successfully',

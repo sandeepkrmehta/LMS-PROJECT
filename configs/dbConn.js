@@ -1,5 +1,5 @@
 import mongoose from "mongoose";
-import dotenv from 'dotenv';
+import dotenv from "dotenv";
 
 // Load environment variables from .env file
 dotenv.config();
@@ -16,11 +16,11 @@ mongoose.set("strictQuery", false);
 const connectToDB = async () => {
   try {
     const { connection } = await mongoose.connect(
-      process.env.MONGO_URI || 'mongodb://127.0.0.1:27017/LMS'
+      process.env.MONGO_URI || "mongodb://127.0.0.1:27017/LMS"
     );
 
     if (connection) {
-      console.log(`Connected to MongoDB: ${connection.host}`);
+      console.log(`mongodb Connected to Successfully!`);
     }
   } catch (error) {
     console.error(`Error connecting to MongoDB: ${error.message}`);
